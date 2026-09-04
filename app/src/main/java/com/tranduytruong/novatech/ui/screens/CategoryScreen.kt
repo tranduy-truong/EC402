@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.tranduytruong.novatech.StoreViewModel
+import com.tranduytruong.novatech.feature.home.StoreViewModel
 import com.tranduytruong.novatech.ui.components.ProductCard
 import com.tranduytruong.novatech.ui.theme.AppBackground
 

@@ -14,7 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -23,8 +23,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.tranduytruong.novatech.StoreViewModel
-import com.tranduytruong.novatech.ui.screens.AccountScreen
+import com.tranduytruong.novatech.feature.auth.AccountScreen
+import com.tranduytruong.novatech.feature.home.StoreViewModel
 import com.tranduytruong.novatech.ui.screens.CartScreen
 import com.tranduytruong.novatech.ui.screens.CategoryScreen
 import com.tranduytruong.novatech.ui.screens.DetailScreen
@@ -44,7 +44,7 @@ private val bottomDestinations = listOf(
 )
 
 @Composable
-fun NovaTechApp(vm: StoreViewModel = viewModel()) {
+fun NovaTechApp(vm: StoreViewModel = hiltViewModel()) {
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route

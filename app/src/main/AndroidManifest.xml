@@ -3,6 +3,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".NovaTechApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_novatech_logo"
         android:label="NovaTech"

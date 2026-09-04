@@ -15,6 +15,9 @@
 - Màn hình tài khoản mẫu
 - Đăng ký, đăng nhập và đăng xuất bằng Firebase Authentication
 - Lưu hồ sơ khách hàng vào Cloud Firestore
+- Giỏ hàng được lưu cục bộ bằng Room, không mất khi đóng ứng dụng
+- Hilt quản lý dependency injection cho ViewModel, database và Firebase
+- DataStore sẵn sàng lưu giao diện và trạng thái onboarding
 - Trang chủ hiện đại với banner tự động chuyển
 - Thanh tìm kiếm cố định và biểu tượng giỏ hàng có số lượng
 - Flash Sale có đồng hồ đếm ngược
@@ -24,20 +27,28 @@
 
 ## Cấu trúc mã nguồn
 
-- `ui/screens`: các màn hình của ứng dụng
+- `core/domain`: model, repository contract và kiểu kết quả dùng chung
+- `core/data`: Room, DataStore, dữ liệu mẫu và repository implementation
+- `di`: các Hilt module cho database, Firebase và coroutine dispatcher
+- `feature/auth`: màn hình và ViewModel đăng nhập/đăng ký
+- `feature/home`: ViewModel cửa hàng và giỏ hàng
+- `ui/screens`: các màn hình mua sắm hiện tại
 - `ui/components`: thành phần giao diện dùng lại
 - `ui/theme`: màu sắc và giao diện Material 3
-- `util`: hàm tiện ích
+
+Các phiên bản thư viện được quản lý tập trung trong `gradle/libs.versions.toml`.
 
 ## Chạy dự án
 
 1. Mở thư mục dự án `EC402` bằng Android Studio.
 2. Chờ Android Studio đồng bộ Gradle.
-3. Chọn máy ảo hoặc điện thoại Android thật.
-4. Nhấn **Run app**.
+3. Đảm bảo `app/google-services.json` đã có trên máy (file này không đưa lên GitHub).
+4. Chọn máy ảo hoặc điện thoại Android thật.
+5. Nhấn **Run app**.
 
 Nếu Android Studio hỏi tạo/cập nhật Gradle Wrapper, chọn phiên bản Gradle tương thích với AGP 8.13.0.
 
-## Bước phát triển tiếp theo
+## Trạng thái lộ trình
 
-Thêm ảnh thật bằng Coil, địa chỉ nhận hàng, lịch sử đơn hàng và thanh toán.
+- Giai đoạn 1 — Kiến trúc và build: hoàn thành.
+- Giai đoạn 2 — Design System và giao diện hiện đại: bước tiếp theo.

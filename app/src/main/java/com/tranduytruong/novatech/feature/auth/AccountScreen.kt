@@ -1,4 +1,4 @@
-package com.tranduytruong.novatech.ui.screens
+package com.tranduytruong.novatech.feature.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -56,16 +56,13 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.tranduytruong.novatech.AccountUiState
-import com.tranduytruong.novatech.AccountViewModel
-import com.tranduytruong.novatech.AuthMode
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.tranduytruong.novatech.ui.theme.AppBackground
 import com.tranduytruong.novatech.ui.theme.BrandBlue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AccountScreen(vm: AccountViewModel = viewModel()) {
+fun AccountScreen(vm: AccountViewModel = hiltViewModel()) {
     val state = vm.uiState
     Scaffold(
         topBar = { TopAppBar(title = { Text("Tài khoản", fontWeight = FontWeight.Bold) }) },

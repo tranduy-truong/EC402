@@ -26,7 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.tranduytruong.novatech.Product
+import com.tranduytruong.novatech.core.domain.model.Product
 import com.tranduytruong.novatech.ui.theme.BrandBlue
 import com.tranduytruong.novatech.ui.theme.RatingYellow
 import com.tranduytruong.novatech.ui.theme.SaleRed
