@@ -1,4 +1,4 @@
-package com.example.techstore
+package com.tranduytruong.novatech
 
 data class Product(
     val id: Int,

@@ -1,4 +1,4 @@
-# TechStore
+# NovaTech
 
 Ứng dụng Android bán điện thoại và đồ điện tử viết bằng Kotlin + Jetpack Compose.
 
@@ -18,7 +18,7 @@
 - Flash Sale có đồng hồ đếm ngược
 - Lưới sản phẩm hai cột, nhãn giảm giá và Freeship
 - Thông báo nhanh khi thêm sản phẩm vào giỏ
-- Logo ứng dụng TechStore
+- Logo ứng dụng NovaTech
 
 ## Cấu trúc mã nguồn
 
@@ -29,7 +29,7 @@
 
 ## Chạy dự án
 
-1. Mở thư mục `TechStore` bằng Android Studio.
+1. Mở thư mục dự án `EC402` bằng Android Studio.
 2. Chờ Android Studio đồng bộ Gradle.
 3. Chọn máy ảo hoặc điện thoại Android thật.
 4. Nhấn **Run app**.

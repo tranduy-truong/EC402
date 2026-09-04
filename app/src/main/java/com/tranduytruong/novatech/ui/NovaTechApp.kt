@@ -1,4 +1,4 @@
-package com.example.techstore.ui
+package com.tranduytruong.novatech.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -23,12 +23,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.techstore.StoreViewModel
-import com.example.techstore.ui.screens.AccountScreen
-import com.example.techstore.ui.screens.CartScreen
-import com.example.techstore.ui.screens.CategoryScreen
-import com.example.techstore.ui.screens.DetailScreen
-import com.example.techstore.ui.screens.HomeScreen
+import com.tranduytruong.novatech.StoreViewModel
+import com.tranduytruong.novatech.ui.screens.AccountScreen
+import com.tranduytruong.novatech.ui.screens.CartScreen
+import com.tranduytruong.novatech.ui.screens.CategoryScreen
+import com.tranduytruong.novatech.ui.screens.DetailScreen
+import com.tranduytruong.novatech.ui.screens.HomeScreen
 
 private data class BottomDestination(
     val route: String,
@@ -44,7 +44,7 @@ private val bottomDestinations = listOf(
 )
 
 @Composable
-fun TechStoreApp(vm: StoreViewModel = viewModel()) {
+fun NovaTechApp(vm: StoreViewModel = viewModel()) {
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
@@ -52,7 +52,7 @@ fun TechStoreApp(vm: StoreViewModel = viewModel()) {
     Scaffold(
         bottomBar = {
             if (currentRoute != null && !currentRoute.startsWith("detail/")) {
-                TechStoreBottomBar(navController, currentRoute, vm.cartCount)
+                NovaTechBottomBar(navController, currentRoute, vm.cartCount)
             }
         }
     ) { innerPadding ->
@@ -78,7 +78,7 @@ fun TechStoreApp(vm: StoreViewModel = viewModel()) {
 }
 
 @Composable
-private fun TechStoreBottomBar(
+private fun NovaTechBottomBar(
     navController: NavHostController,
     currentRoute: String,
     cartCount: Int,

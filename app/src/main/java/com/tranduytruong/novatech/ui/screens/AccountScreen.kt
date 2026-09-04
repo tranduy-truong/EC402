@@ -1,4 +1,4 @@
-package com.example.techstore.ui.screens
+package com.tranduytruong.novatech.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,8 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.techstore.ui.theme.AppBackground
-import com.example.techstore.ui.theme.BrandBlue
+import com.tranduytruong.novatech.ui.theme.AppBackground
+import com.tranduytruong.novatech.ui.theme.BrandBlue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,7 +36,7 @@ fun AccountScreen() {
             verticalArrangement = Arrangement.Center,
         ) {
             Icon(Icons.Default.Person, contentDescription = null, modifier = Modifier.size(96.dp), tint = BrandBlue)
-            Text("Chào mừng đến TechStore", fontSize = 22.sp, fontWeight = FontWeight.Bold)
+            Text("Chào mừng đến NovaTech", fontSize = 22.sp, fontWeight = FontWeight.Bold)
             Text("Đăng nhập để theo dõi đơn hàng và nhận ưu đãi")
             ElevatedCard(Modifier.fillMaxWidth().padding(top = 24.dp)) {
                 Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {

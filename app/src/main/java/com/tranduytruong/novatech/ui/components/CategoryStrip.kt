@@ -1,4 +1,4 @@
-package com.example.techstore.ui.components
+package com.tranduytruong.novatech.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,7 +26,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.techstore.ui.theme.BrandBlue
+import com.tranduytruong.novatech.ui.theme.BrandBlue
 
 @Composable
 fun CategoryStrip(categories: List<String>, onCategoryClick: (String) -> Unit) {

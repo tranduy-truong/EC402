@@ -1,4 +1,4 @@
-package com.example.techstore.ui.theme
+package com.tranduytruong.novatech.ui.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
@@ -10,7 +10,7 @@ val AppBackground = Color(0xFFF8FAFC)
 val SaleRed = Color(0xFFDC2626)
 val RatingYellow = Color(0xFFF59E0B)
 
-private val TechStoreColors = lightColorScheme(
+private val NovaTechColors = lightColorScheme(
     primary = BrandBlue,
     background = AppBackground,
     surface = Color.White,
@@ -18,6 +18,6 @@ private val TechStoreColors = lightColorScheme(
 )
 
 @Composable
-fun TechStoreTheme(content: @Composable () -> Unit) {
-    MaterialTheme(colorScheme = TechStoreColors, content = content)
+fun NovaTechTheme(content: @Composable () -> Unit) {
+    MaterialTheme(colorScheme = NovaTechColors, content = content)
 }

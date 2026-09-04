@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "TechStore"
+rootProject.name = "NovaTech"
 include(":app")

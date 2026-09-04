@@ -1,4 +1,4 @@
-package com.example.techstore.util
+package com.tranduytruong.novatech.util
 
 import java.text.NumberFormat
 import java.util.Locale

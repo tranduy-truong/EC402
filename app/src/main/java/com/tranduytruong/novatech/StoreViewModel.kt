@@ -1,4 +1,4 @@
-package com.example.techstore
+package com.tranduytruong.novatech
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf

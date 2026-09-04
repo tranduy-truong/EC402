@@ -1,4 +1,4 @@
-package com.example.techstore.ui.screens
+package com.tranduytruong.novatech.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,9 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.techstore.StoreViewModel
-import com.example.techstore.ui.components.ProductCard
-import com.example.techstore.ui.theme.AppBackground
+import com.tranduytruong.novatech.StoreViewModel
+import com.tranduytruong.novatech.ui.components.ProductCard
+import com.tranduytruong.novatech.ui.theme.AppBackground
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -1,4 +1,4 @@
-package com.example.techstore.ui.screens
+package com.tranduytruong.novatech.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -40,13 +40,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.techstore.StoreViewModel
-import com.example.techstore.ui.components.BannerCarousel
-import com.example.techstore.ui.components.CategoryStrip
-import com.example.techstore.ui.components.FlashSaleHeader
-import com.example.techstore.ui.components.ProductGridCard
-import com.example.techstore.ui.theme.AppBackground
-import com.example.techstore.ui.theme.BrandBlue
+import com.tranduytruong.novatech.StoreViewModel
+import com.tranduytruong.novatech.ui.components.BannerCarousel
+import com.tranduytruong.novatech.ui.components.CategoryStrip
+import com.tranduytruong.novatech.ui.components.FlashSaleHeader
+import com.tranduytruong.novatech.ui.components.ProductGridCard
+import com.tranduytruong.novatech.ui.theme.AppBackground
+import com.tranduytruong.novatech.ui.theme.BrandBlue
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -63,7 +63,7 @@ fun HomeScreen(navController: NavController, vm: StoreViewModel) {
                 Column {
                     TopAppBar(
                         title = {
-                            Text("TechStore", color = BrandBlue, fontSize = 22.sp, fontWeight = FontWeight.ExtraBold)
+                            Text("NovaTech", color = BrandBlue, fontSize = 22.sp, fontWeight = FontWeight.ExtraBold)
                         },
                         colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White),
                         actions = {

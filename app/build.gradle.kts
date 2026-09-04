@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.techstore"
+    namespace = "com.tranduytruong.novatech"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.techstore"
+        applicationId = "com.tranduytruong.novatech"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

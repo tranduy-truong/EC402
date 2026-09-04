@@ -1,4 +1,4 @@
-package com.example.techstore.ui.components
+package com.tranduytruong.novatech.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -33,11 +33,11 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.techstore.Product
-import com.example.techstore.ui.theme.BrandBlue
-import com.example.techstore.ui.theme.RatingYellow
-import com.example.techstore.ui.theme.SaleRed
-import com.example.techstore.util.formatMoney
+import com.tranduytruong.novatech.Product
+import com.tranduytruong.novatech.ui.theme.BrandBlue
+import com.tranduytruong.novatech.ui.theme.RatingYellow
+import com.tranduytruong.novatech.ui.theme.SaleRed
+import com.tranduytruong.novatech.util.formatMoney
 
 @Composable
 fun ProductGridCard(product: Product, onOpen: () -> Unit, onAdd: () -> Unit) {
