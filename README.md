@@ -13,6 +13,8 @@
 - Thanh điều hướng dưới: Trang chủ, Danh mục, Giỏ hàng, Tài khoản
 - Hình minh họa sản phẩm lưu cục bộ, không cần Internet
 - Màn hình tài khoản mẫu
+- Đăng ký, đăng nhập và đăng xuất bằng Firebase Authentication
+- Lưu hồ sơ khách hàng vào Cloud Firestore
 - Trang chủ hiện đại với banner tự động chuyển
 - Thanh tìm kiếm cố định và biểu tượng giỏ hàng có số lượng
 - Flash Sale có đồng hồ đếm ngược
@@ -38,4 +40,4 @@ Nếu Android Studio hỏi tạo/cập nhật Gradle Wrapper, chọn phiên bả
 
 ## Bước phát triển tiếp theo
 
-Thêm ảnh thật bằng Coil, màn hình đăng nhập, địa chỉ nhận hàng, thanh toán và kết nối Firebase/REST API.
+Thêm ảnh thật bằng Coil, địa chỉ nhận hàng, lịch sử đơn hàng và thanh toán.
