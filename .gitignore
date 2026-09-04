@@ -3,6 +3,7 @@
 .idea/
 .kotlin/
 local.properties
+google-services.json
 build/
 app/build/
 captures/
