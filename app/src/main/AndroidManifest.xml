@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
         android:allowBackup="true"
+        android:icon="@drawable/ic_store_logo"
         android:label="TechStore"
+        android:roundIcon="@drawable/ic_store_logo"
         android:theme="@style/Theme.TechStore">
         <activity
             android:name=".MainActivity"

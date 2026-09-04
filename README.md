@@ -13,6 +13,12 @@
 - Thanh điều hướng dưới: Trang chủ, Danh mục, Giỏ hàng, Tài khoản
 - Hình minh họa sản phẩm lưu cục bộ, không cần Internet
 - Màn hình tài khoản mẫu
+- Trang chủ hiện đại với banner tự động chuyển
+- Thanh tìm kiếm cố định và biểu tượng giỏ hàng có số lượng
+- Flash Sale có đồng hồ đếm ngược
+- Lưới sản phẩm hai cột, nhãn giảm giá và Freeship
+- Thông báo nhanh khi thêm sản phẩm vào giỏ
+- Logo ứng dụng TechStore
 
 ## Cấu trúc mã nguồn
 
