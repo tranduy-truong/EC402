@@ -10,10 +10,20 @@
 - Thêm vào giỏ hàng
 - Tăng, giảm và xóa sản phẩm khỏi giỏ
 - Tính tổng tiền
+- Thanh điều hướng dưới: Trang chủ, Danh mục, Giỏ hàng, Tài khoản
+- Hình minh họa sản phẩm lưu cục bộ, không cần Internet
+- Màn hình tài khoản mẫu
+
+## Cấu trúc mã nguồn
+
+- `ui/screens`: các màn hình của ứng dụng
+- `ui/components`: thành phần giao diện dùng lại
+- `ui/theme`: màu sắc và giao diện Material 3
+- `util`: hàm tiện ích
 
 ## Chạy dự án
 
-1. Clone repository và mở thư mục dự án bằng Android Studio.
+1. Mở thư mục `TechStore` bằng Android Studio.
 2. Chờ Android Studio đồng bộ Gradle.
 3. Chọn máy ảo hoặc điện thoại Android thật.
 4. Nhấn **Run app**.
