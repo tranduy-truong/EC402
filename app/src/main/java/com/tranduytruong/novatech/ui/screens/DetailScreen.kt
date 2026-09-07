@@ -1,7 +1,10 @@
 package com.tranduytruong.novatech.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -10,79 +13,99 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddShoppingCart
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.LocalShipping
-import androidx.compose.material.icons.filled.Shield
+import androidx.compose.material.icons.rounded.AddShoppingCart
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material.icons.rounded.LocalShipping
+import androidx.compose.material.icons.rounded.Shield
+import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.tranduytruong.novatech.core.domain.model.Product
 import com.tranduytruong.novatech.feature.home.StoreViewModel
-import com.tranduytruong.novatech.ui.components.GlassSurface
 import com.tranduytruong.novatech.ui.components.NovaTechBackground
 import com.tranduytruong.novatech.ui.components.NovaTechPrimaryButton
+import com.tranduytruong.novatech.ui.components.PriceText
+import com.tranduytruong.novatech.ui.components.glass.GlassCard
+import com.tranduytruong.novatech.ui.components.glass.GlassIconButton
+import com.tranduytruong.novatech.ui.components.glass.GlassTopBar
+import com.tranduytruong.novatech.ui.theme.GlassTokens
 import com.tranduytruong.novatech.ui.theme.RatingYellow
-import com.tranduytruong.novatech.ui.theme.SaleRed
-import com.tranduytruong.novatech.util.formatMoney
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(navController: NavController, vm: StoreViewModel, product: Product) {
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+    val isDark = isSystemInDarkTheme()
+
     NovaTechBackground {
         Scaffold(
             containerColor = Color.Transparent,
+            snackbarHost = { SnackbarHost(snackbarHostState) },
             topBar = {
-                GlassSurface(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(bottomStart = 28.dp, bottomEnd = 28.dp),
-                ) {
-                    TopAppBar(
-                        title = { Text("Chi tiết sản phẩm", style = MaterialTheme.typography.titleLarge) },
-                        navigationIcon = {
-                            IconButton(onClick = { navController.popBackStack() }) {
-                                Icon(Icons.Default.ArrowBack, contentDescription = "Quay lại")
-                            }
-                        },
-                        colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
-                    )
-                }
+                GlassTopBar(
+                    title = "Chi tiết sản phẩm",
+                    navigationIcon = {
+                        GlassIconButton(
+                            icon = Icons.Rounded.ArrowBack,
+                            contentDescription = "Quay lại",
+                            onClick = { navController.popBackStack() },
+                            size = 38.dp,
+                            iconSize = 20.dp,
+                        )
+                    },
+                )
             },
             bottomBar = {
-                GlassSurface(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
-                    contentPadding = PaddingValues(14.dp),
+                // Floating Bottom Action Bar with glass padding
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 14.dp),
                 ) {
                     NovaTechPrimaryButton(
                         text = { Text("Thêm vào giỏ hàng") },
-                        onClick = { vm.addToCart(product) },
+                        onClick = {
+                            vm.addToCart(product)
+                            scope.launch {
+                                snackbarHostState.showSnackbar("Đã thêm ${product.name} vào giỏ hàng")
+                            }
+                        },
                         modifier = Modifier.fillMaxWidth(),
                         leadingIcon = {
                             Icon(
-                                Icons.Default.AddShoppingCart,
+                                imageVector = Icons.Rounded.AddShoppingCart,
                                 contentDescription = null,
-                                modifier = Modifier.padding(end = 8.dp),
+                                tint = Color.White,
+                                modifier = Modifier.size(20.dp),
                             )
                         },
                     )
@@ -94,118 +117,181 @@ fun DetailScreen(navController: NavController, vm: StoreViewModel, product: Prod
                     .fillMaxSize()
                     .padding(padding)
                     .verticalScroll(rememberScrollState())
-                    .padding(16.dp),
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                GlassSurface(
+                // Product Image Container
+                GlassCard(
                     modifier = Modifier.fillMaxWidth(),
-                    contentPadding = PaddingValues(18.dp),
+                    shape = RoundedCornerShape(28.dp),
+                    elevation = GlassTokens.ElevationHigh,
+                    contentPadding = PaddingValues(20.dp),
                 ) {
-                    Image(
-                        painter = painterResource(product.imageRes),
-                        contentDescription = product.name,
-                        modifier = Modifier.fillMaxWidth().height(260.dp),
-                        contentScale = ContentScale.Fit,
-                    )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(260.dp)
+                            .clip(RoundedCornerShape(20.dp))
+                            .background(
+                                if (isDark) Color(0xFF0F1E38).copy(alpha = 0.60f)
+                                else Color(0xFFEBF1FF).copy(alpha = 0.70f)
+                            ),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Image(
+                            painter = painterResource(product.imageRes),
+                            contentDescription = product.name,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            contentScale = ContentScale.Fit,
+                        )
+                    }
                 }
 
-                GlassSurface(
+                // Main Info Card
+                GlassCard(
                     modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(24.dp),
                     contentPadding = PaddingValues(20.dp),
                 ) {
                     Column(modifier = Modifier.fillMaxWidth()) {
                         Text(
-                            product.category.uppercase(),
+                            text = product.category.uppercase(),
                             color = MaterialTheme.colorScheme.primary,
-                            style = MaterialTheme.typography.labelLarge,
+                            style = MaterialTheme.typography.labelLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                letterSpacing = 1.sp,
+                            ),
                         )
+
+                        Spacer(modifier = Modifier.height(4.dp))
+
                         Text(
-                            product.name,
-                            modifier = Modifier.padding(top = 4.dp),
-                            style = MaterialTheme.typography.headlineSmall,
+                            text = product.name,
+                            style = MaterialTheme.typography.headlineSmall.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onSurface,
+                            ),
                         )
+
+                        Spacer(modifier = Modifier.height(10.dp))
+
+                        // Rating & Sales Row
                         Row(
-                            modifier = Modifier.padding(top = 8.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(10.dp),
                         ) {
                             Surface(
-                                shape = RoundedCornerShape(12.dp),
+                                shape = RoundedCornerShape(10.dp),
                                 color = RatingYellow.copy(alpha = 0.16f),
                             ) {
-                                Text(
-                                    "★ ${product.rating}",
+                                Row(
                                     modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
-                                    color = RatingYellow,
-                                    fontWeight = FontWeight.Bold,
-                                )
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Rounded.Star,
+                                        contentDescription = null,
+                                        tint = RatingYellow,
+                                        modifier = Modifier.size(16.dp),
+                                    )
+                                    Spacer(modifier = Modifier.width(4.dp))
+                                    Text(
+                                        text = "${product.rating}",
+                                        color = RatingYellow,
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 13.sp,
+                                    )
+                                }
                             }
+
                             Text(
-                                "Đã bán ${product.id * 127}",
+                                text = "Đã bán ${product.id * 127}",
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 style = MaterialTheme.typography.bodyMedium,
                             )
                         }
-                        Row(
-                            modifier = Modifier.padding(top = 14.dp),
-                            verticalAlignment = Alignment.Bottom,
-                            horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        ) {
-                            Text(formatMoney(product.price), color = SaleRed, style = MaterialTheme.typography.headlineSmall)
-                            product.oldPrice?.let {
-                                Text(
-                                    formatMoney(it),
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    textDecoration = TextDecoration.LineThrough,
-                                    style = MaterialTheme.typography.bodyMedium,
-                                )
-                            }
-                        }
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        // Price formatting
+                        PriceText(
+                            price = product.price,
+                            originalPrice = product.oldPrice,
+                            priceFontSize = 26.sp,
+                            discountPercentage = product.oldPrice?.let {
+                                ((it - product.price) * 100 / it).toInt()
+                            },
+                        )
                     }
                 }
 
-                GlassSurface(
+                // Benefits & Guarantees Strip
+                GlassCard(
                     modifier = Modifier.fillMaxWidth(),
-                    contentPadding = PaddingValues(18.dp),
+                    shape = RoundedCornerShape(20.dp),
+                    contentPadding = PaddingValues(16.dp),
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceEvenly,
                     ) {
-                        ProductBenefit(Icons.Default.LocalShipping, "Freeship")
-                        ProductBenefit(Icons.Default.Shield, "Chính hãng")
+                        BenefitItem(icon = Icons.Rounded.LocalShipping, label = "Freeship toàn quốc")
+                        BenefitItem(icon = Icons.Rounded.Shield, label = "Chính hãng 100%")
+                        BenefitItem(icon = Icons.Rounded.CheckCircle, label = "Bảo hành 12T")
                     }
                 }
 
-                GlassSurface(
+                // Product Description
+                GlassCard(
                     modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(24.dp),
                     contentPadding = PaddingValues(20.dp),
                 ) {
                     Column {
-                        Text("Mô tả sản phẩm", style = MaterialTheme.typography.titleLarge)
-                        Spacer(Modifier.height(8.dp))
                         Text(
-                            product.description,
+                            text = "Mô tả sản phẩm",
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onSurface,
+                            ),
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Text(
+                            text = product.description,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            style = MaterialTheme.typography.bodyLarge,
+                            style = MaterialTheme.typography.bodyMedium.copy(
+                                lineHeight = 22.sp,
+                            ),
                         )
                     }
                 }
+
+                Spacer(modifier = Modifier.height(60.dp))
             }
         }
     }
 }
 
 @Composable
-private fun ProductBenefit(
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
-    label: String,
-) {
+private fun BenefitItem(icon: ImageVector, label: String) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(7.dp),
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
-        Icon(icon, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
-        Text(label, style = MaterialTheme.typography.labelLarge)
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.size(18.dp),
+        )
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelMedium.copy(
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.onSurface,
+            ),
+        )
     }
 }

@@ -6,8 +6,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ErrorOutline
+import androidx.compose.material.icons.rounded.ErrorOutline
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -17,8 +18,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.tranduytruong.novatech.ui.components.glass.GlassCard
+import com.tranduytruong.novatech.ui.theme.GlassTokens
 
 @Composable
 fun EmptyState(
@@ -29,24 +33,33 @@ fun EmptyState(
     actionLabel: String? = null,
     onAction: (() -> Unit)? = null,
 ) {
-    GlassSurface(
+    GlassCard(
         modifier = modifier.fillMaxWidth(),
-        contentPadding = PaddingValues(horizontal = 24.dp, vertical = 30.dp),
+        shape = RoundedCornerShape(28.dp),
+        elevation = GlassTokens.ElevationMedium,
+        contentPadding = PaddingValues(horizontal = 24.dp, vertical = 32.dp),
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                modifier = Modifier.size(54.dp),
+                modifier = Modifier.size(56.dp),
                 tint = MaterialTheme.colorScheme.primary,
             )
-            Text(title, style = MaterialTheme.typography.titleLarge, textAlign = TextAlign.Center)
             Text(
-                message,
+                text = title,
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                ),
+                textAlign = TextAlign.Center,
+            )
+            Text(
+                text = message,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
@@ -55,7 +68,7 @@ fun EmptyState(
                 NovaTechPrimaryButton(
                     text = { Text(actionLabel) },
                     onClick = onAction,
-                    modifier = Modifier.padding(top = 6.dp),
+                    modifier = Modifier.padding(top = 8.dp),
                 )
             }
         }
@@ -67,17 +80,24 @@ fun LoadingState(
     message: String,
     modifier: Modifier = Modifier,
 ) {
-    GlassSurface(
+    GlassCard(
         modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(24.dp),
         contentPadding = PaddingValues(28.dp),
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
-            CircularProgressIndicator()
-            Text(message, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            CircularProgressIndicator(
+                color = MaterialTheme.colorScheme.primary,
+            )
+            Text(
+                text = message,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = MaterialTheme.typography.bodyMedium,
+            )
         }
     }
 }
@@ -89,7 +109,7 @@ fun ErrorState(
     onRetry: (() -> Unit)? = null,
 ) {
     EmptyState(
-        icon = Icons.Default.ErrorOutline,
+        icon = Icons.Rounded.ErrorOutline,
         title = "Không thể tải dữ liệu",
         message = message,
         modifier = modifier,
@@ -104,13 +124,18 @@ fun InlineMessage(
     isError: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    val tint: Color = if (isError) MaterialTheme.colorScheme.error else Color(0xFF22A06B)
-    GlassSurface(modifier = modifier.fillMaxWidth()) {
+    val tint: Color = if (isError) MaterialTheme.colorScheme.error else Color(0xFF10B981)
+    GlassCard(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+    ) {
         Text(
             text = message,
             color = tint,
-            style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
+            style = MaterialTheme.typography.bodyMedium.copy(
+                fontWeight = FontWeight.Medium,
+            ),
         )
     }
 }

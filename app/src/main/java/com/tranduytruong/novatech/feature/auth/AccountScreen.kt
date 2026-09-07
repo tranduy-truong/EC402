@@ -18,34 +18,30 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.BrightnessAuto
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.DarkMode
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.LightMode
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Login
-import androidx.compose.material.icons.filled.Logout
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.PersonAdd
-import androidx.compose.material.icons.filled.Security
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material.icons.rounded.BrightnessAuto
+import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material.icons.rounded.DarkMode
+import androidx.compose.material.icons.rounded.Email
+import androidx.compose.material.icons.rounded.LightMode
+import androidx.compose.material.icons.rounded.Lock
+import androidx.compose.material.icons.rounded.Login
+import androidx.compose.material.icons.rounded.Logout
+import androidx.compose.material.icons.rounded.Person
+import androidx.compose.material.icons.rounded.PersonAdd
+import androidx.compose.material.icons.rounded.Security
+import androidx.compose.material.icons.rounded.Visibility
+import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -53,7 +49,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
@@ -61,12 +56,17 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.tranduytruong.novatech.core.domain.model.ThemeMode
-import com.tranduytruong.novatech.ui.components.GlassSurface
 import com.tranduytruong.novatech.ui.components.InlineMessage
 import com.tranduytruong.novatech.ui.components.NovaTechBackground
 import com.tranduytruong.novatech.ui.components.NovaTechPrimaryButton
+import com.tranduytruong.novatech.ui.components.glass.GlassButton
+import com.tranduytruong.novatech.ui.components.glass.GlassCard
+import com.tranduytruong.novatech.ui.components.glass.GlassChip
+import com.tranduytruong.novatech.ui.components.glass.GlassTopBar
+import com.tranduytruong.novatech.ui.theme.GlassTokens
 import com.tranduytruong.novatech.ui.theme.SuccessGreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -82,18 +82,17 @@ fun AccountScreen(
         Scaffold(
             containerColor = Color.Transparent,
             topBar = {
-                GlassSurface(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(bottomStart = 28.dp, bottomEnd = 28.dp),
-                ) {
-                    TopAppBar(
-                        title = { Text("Tài khoản", style = MaterialTheme.typography.headlineSmall) },
-                        colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
-                    )
-                }
+                GlassTopBar(
+                    title = "Tài khoản",
+                    subtitle = if (state.user != null) state.profileName.ifBlank { "Thành viên" } else null,
+                )
             },
         ) { padding ->
-            Box(modifier = Modifier.fillMaxSize().padding(padding)) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding),
+            ) {
                 if (state.user == null) {
                     AuthContent(
                         state = state,
@@ -138,48 +137,58 @@ private fun AuthContent(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 18.dp, vertical = 22.dp),
+            .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 100.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(14.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        BrandAvatar(if (isSignIn) Icons.Default.Login else Icons.Default.PersonAdd)
-        Text(
-            text = if (isSignIn) "Chào mừng trở lại" else "Tham gia NovaTech",
-            style = MaterialTheme.typography.headlineSmall,
-        )
-        Text(
-            text = if (isSignIn) "Đăng nhập để tiếp tục mua sắm" else "Tạo tài khoản chỉ trong vài giây",
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            style = MaterialTheme.typography.bodyMedium,
-        )
+        BrandAvatar(if (isSignIn) Icons.Rounded.Login else Icons.Rounded.PersonAdd)
 
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                text = if (isSignIn) "Chào mừng trở lại" else "Tham gia NovaTech",
+                style = MaterialTheme.typography.headlineSmall.copy(
+                    fontWeight = FontWeight.ExtraBold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                ),
+            )
+            Text(
+                text = if (isSignIn) "Đăng nhập để tiếp tục trải nghiệm" else "Tạo tài khoản chỉ trong vài giây",
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = MaterialTheme.typography.bodyMedium,
+            )
+        }
+
+        // Auth Mode Switcher
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            AuthModeChip(
-                label = "Đăng nhập",
-                selected = isSignIn,
-                enabled = !state.isLoading,
-                modifier = Modifier.weight(1f),
+            GlassChip(
+                text = "Đăng nhập",
+                isSelected = isSignIn,
                 onClick = { onModeChange(AuthMode.SIGN_IN) },
-            )
-            AuthModeChip(
-                label = "Tạo tài khoản",
-                selected = !isSignIn,
-                enabled = !state.isLoading,
+                icon = Icons.Rounded.Login,
                 modifier = Modifier.weight(1f),
+            )
+            GlassChip(
+                text = "Tạo tài khoản",
+                isSelected = !isSignIn,
                 onClick = { onModeChange(AuthMode.SIGN_UP) },
+                icon = Icons.Rounded.PersonAdd,
+                modifier = Modifier.weight(1f),
             )
         }
 
-        GlassSurface(
+        // Form Container
+        GlassCard(
             modifier = Modifier.fillMaxWidth(),
-            contentPadding = PaddingValues(18.dp),
+            shape = RoundedCornerShape(24.dp),
+            elevation = GlassTokens.ElevationHigh,
+            contentPadding = PaddingValues(20.dp),
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
+                verticalArrangement = Arrangement.spacedBy(14.dp),
             ) {
                 if (!isSignIn) {
                     OutlinedTextField(
@@ -187,34 +196,63 @@ private fun AuthContent(
                         onValueChange = onNameChange,
                         modifier = Modifier.fillMaxWidth(),
                         label = { Text("Họ và tên") },
-                        leadingIcon = { Icon(Icons.Default.Person, contentDescription = null) },
+                        leadingIcon = {
+                            Icon(
+                                Icons.Rounded.Person,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.primary,
+                            )
+                        },
                         shape = RoundedCornerShape(16.dp),
                         singleLine = true,
                         enabled = !state.isLoading,
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = MaterialTheme.colorScheme.primary,
+                            unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
+                        ),
                     )
                 }
+
                 OutlinedTextField(
                     value = state.email,
                     onValueChange = onEmailChange,
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text("Email") },
-                    leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
+                    leadingIcon = {
+                        Icon(
+                            Icons.Rounded.Email,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary,
+                        )
+                    },
                     shape = RoundedCornerShape(16.dp),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     singleLine = true,
                     enabled = !state.isLoading,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
+                    ),
                 )
+
                 OutlinedTextField(
                     value = state.password,
                     onValueChange = onPasswordChange,
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text("Mật khẩu") },
-                    leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
+                    leadingIcon = {
+                        Icon(
+                            Icons.Rounded.Lock,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary,
+                        )
+                    },
                     trailingIcon = {
                         IconButton(onClick = { showPassword = !showPassword }) {
                             Icon(
-                                if (showPassword) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                                imageVector = if (showPassword) Icons.Rounded.VisibilityOff else Icons.Rounded.Visibility,
                                 contentDescription = if (showPassword) "Ẩn mật khẩu" else "Hiện mật khẩu",
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
                     },
@@ -223,19 +261,34 @@ private fun AuthContent(
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                     singleLine = true,
                     enabled = !state.isLoading,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
+                    ),
                 )
+
                 if (!isSignIn) {
                     OutlinedTextField(
                         value = state.confirmPassword,
                         onValueChange = onConfirmPasswordChange,
                         modifier = Modifier.fillMaxWidth(),
                         label = { Text("Xác nhận mật khẩu") },
-                        leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
+                        leadingIcon = {
+                            Icon(
+                                Icons.Rounded.Lock,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.primary,
+                            )
+                        },
                         shape = RoundedCornerShape(16.dp),
                         visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         singleLine = true,
                         enabled = !state.isLoading,
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = MaterialTheme.colorScheme.primary,
+                            unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
+                        ),
                     )
                 }
 
@@ -247,7 +300,7 @@ private fun AuthContent(
                         if (state.isLoading) {
                             CircularProgressIndicator(
                                 modifier = Modifier.size(22.dp),
-                                color = MaterialTheme.colorScheme.onPrimary,
+                                color = Color.White,
                                 strokeWidth = 2.dp,
                             )
                         } else {
@@ -260,9 +313,10 @@ private fun AuthContent(
                     leadingIcon = {
                         if (!state.isLoading) {
                             Icon(
-                                if (isSignIn) Icons.Default.Login else Icons.Default.PersonAdd,
+                                imageVector = if (isSignIn) Icons.Rounded.Login else Icons.Rounded.PersonAdd,
                                 contentDescription = null,
-                                modifier = Modifier.padding(end = 8.dp),
+                                tint = Color.White,
+                                modifier = Modifier.size(20.dp),
                             )
                         }
                     },
@@ -285,63 +339,96 @@ private fun ProfileContent(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(18.dp),
+            .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 100.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(14.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        BrandAvatar(Icons.Default.Person)
-        Text(
-            state.profileName.ifBlank { "Khách hàng NovaTech" },
-            style = MaterialTheme.typography.headlineSmall,
-        )
-        Text(
-            state.user?.email.orEmpty(),
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            style = MaterialTheme.typography.bodyMedium,
-        )
+        BrandAvatar(Icons.Rounded.Person)
+
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                text = state.profileName.ifBlank { "Khách hàng NovaTech" },
+                style = MaterialTheme.typography.headlineSmall.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                ),
+            )
+            Spacer(modifier = Modifier.height(2.dp))
+            Text(
+                text = state.user?.email.orEmpty(),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = MaterialTheme.typography.bodyMedium,
+            )
+        }
 
         Surface(
             color = SuccessGreen.copy(alpha = 0.15f),
             shape = RoundedCornerShape(20.dp),
         ) {
             Row(
-                modifier = Modifier.padding(horizontal = 12.dp, vertical = 7.dp),
+                modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
             ) {
-                Icon(Icons.Default.CheckCircle, contentDescription = null, tint = SuccessGreen)
-                Text("Đã đăng nhập", color = SuccessGreen, fontWeight = FontWeight.SemiBold)
+                Icon(
+                    imageVector = Icons.Rounded.CheckCircle,
+                    contentDescription = null,
+                    tint = SuccessGreen,
+                    modifier = Modifier.size(18.dp),
+                )
+                Text(
+                    text = "Thành viên chính thức",
+                    color = SuccessGreen,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 13.sp,
+                )
             }
         }
 
         state.success?.let { InlineMessage(it, isError = false) }
 
-        GlassSurface(
+        // Member Benefits Box
+        GlassCard(
             modifier = Modifier.fillMaxWidth(),
-            contentPadding = PaddingValues(18.dp),
+            shape = RoundedCornerShape(24.dp),
+            contentPadding = PaddingValues(20.dp),
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(14.dp),
             ) {
-                Text("Quyền lợi thành viên", style = MaterialTheme.typography.titleLarge)
-                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-                AccountBenefit(Icons.Default.Security, "Thông tin tài khoản được bảo vệ")
-                AccountBenefit(Icons.Default.CheckCircle, "Theo dõi trạng thái đơn hàng")
-                AccountBenefit(Icons.Default.Email, "Nhận thông báo và ưu đãi NovaTech")
+                Text(
+                    text = "Quyền lợi thành viên",
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    ),
+                )
+
+                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+
+                AccountBenefit(Icons.Rounded.Security, "Thông tin tài khoản được bảo mật tuyệt đối")
+                AccountBenefit(Icons.Rounded.CheckCircle, "Theo dõi lịch sử và trạng thái đơn hàng")
+                AccountBenefit(Icons.Rounded.Email, "Nhận thông báo ưu đãi độc quyền NovaTech")
             }
         }
 
         ThemeSelector(themeMode, onThemeModeChange)
 
-        OutlinedButton(
+        // Sign Out Glass Button
+        GlassButton(
+            text = { Text("Đăng xuất tài khoản") },
             onClick = onSignOut,
-            modifier = Modifier.fillMaxWidth().height(52.dp),
-            shape = RoundedCornerShape(17.dp),
-        ) {
-            Icon(Icons.Default.Logout, contentDescription = null)
-            Text("  Đăng xuất")
-        }
+            modifier = Modifier.fillMaxWidth(),
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Rounded.Logout,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.size(20.dp),
+                )
+            },
+        )
     }
 }
 
@@ -350,41 +437,52 @@ private fun ThemeSelector(
     themeMode: ThemeMode,
     onThemeModeChange: (ThemeMode) -> Unit,
 ) {
-    GlassSurface(
+    GlassCard(
         modifier = Modifier.fillMaxWidth(),
-        contentPadding = PaddingValues(18.dp),
+        shape = RoundedCornerShape(24.dp),
+        contentPadding = PaddingValues(20.dp),
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
-            Text("Giao diện", style = MaterialTheme.typography.titleLarge)
             Text(
-                "Lựa chọn được tự động ghi nhớ trên thiết bị.",
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                style = MaterialTheme.typography.bodyMedium,
+                text = "Giao diện ứng dụng",
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                ),
             )
+
+            Text(
+                text = "Tự động ghi nhớ trên thiết bị của bạn",
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = MaterialTheme.typography.bodySmall,
+            )
+
+            Spacer(modifier = Modifier.height(14.dp))
+
             Row(
-                modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
-                horizontalArrangement = Arrangement.spacedBy(7.dp),
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                ThemeChip(
-                    label = "Hệ thống",
-                    icon = Icons.Default.BrightnessAuto,
-                    selected = themeMode == ThemeMode.SYSTEM,
-                    modifier = Modifier.weight(1f),
+                GlassChip(
+                    text = "Hệ thống",
+                    isSelected = themeMode == ThemeMode.SYSTEM,
                     onClick = { onThemeModeChange(ThemeMode.SYSTEM) },
-                )
-                ThemeChip(
-                    label = "Sáng",
-                    icon = Icons.Default.LightMode,
-                    selected = themeMode == ThemeMode.LIGHT,
+                    icon = Icons.Rounded.BrightnessAuto,
                     modifier = Modifier.weight(1f),
+                )
+                GlassChip(
+                    text = "Sáng",
+                    isSelected = themeMode == ThemeMode.LIGHT,
                     onClick = { onThemeModeChange(ThemeMode.LIGHT) },
-                )
-                ThemeChip(
-                    label = "Tối",
-                    icon = Icons.Default.DarkMode,
-                    selected = themeMode == ThemeMode.DARK,
+                    icon = Icons.Rounded.LightMode,
                     modifier = Modifier.weight(1f),
+                )
+                GlassChip(
+                    text = "Tối",
+                    isSelected = themeMode == ThemeMode.DARK,
                     onClick = { onThemeModeChange(ThemeMode.DARK) },
+                    icon = Icons.Rounded.DarkMode,
+                    modifier = Modifier.weight(1f),
                 )
             }
         }
@@ -392,61 +490,22 @@ private fun ThemeSelector(
 }
 
 @Composable
-private fun ThemeChip(
-    label: String,
-    icon: ImageVector,
-    selected: Boolean,
-    modifier: Modifier,
-    onClick: () -> Unit,
-) {
-    FilterChip(
-        selected = selected,
-        onClick = onClick,
-        modifier = modifier,
-        label = { Text(label, maxLines = 1) },
-        leadingIcon = { Icon(icon, contentDescription = null, modifier = Modifier.size(17.dp)) },
-        colors = FilterChipDefaults.filterChipColors(
-            selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-            selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
-        ),
-    )
-}
-
-@Composable
-private fun AuthModeChip(
-    label: String,
-    selected: Boolean,
-    enabled: Boolean,
-    modifier: Modifier,
-    onClick: () -> Unit,
-) {
-    FilterChip(
-        selected = selected,
-        onClick = onClick,
-        modifier = modifier,
-        enabled = enabled,
-        label = { Text(label, modifier = Modifier.fillMaxWidth(), fontWeight = FontWeight.SemiBold) },
-        colors = FilterChipDefaults.filterChipColors(
-            selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-            selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
-        ),
-    )
-}
-
-@Composable
 private fun BrandAvatar(icon: ImageVector) {
     Box(
         modifier = Modifier
-            .size(88.dp)
+            .size(90.dp)
             .background(
-                Brush.linearGradient(
-                    listOf(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.secondary)
-                ),
-                CircleShape,
+                brush = GlassTokens.primaryGradientBrush(),
+                shape = CircleShape,
             ),
         contentAlignment = Alignment.Center,
     ) {
-        Icon(icon, contentDescription = null, modifier = Modifier.size(44.dp), tint = Color.White)
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            modifier = Modifier.size(46.dp),
+            tint = Color.White,
+        )
     }
 }
 
@@ -459,15 +518,23 @@ private fun AccountBenefit(icon: ImageVector, text: String) {
     ) {
         Surface(
             shape = CircleShape,
-            color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.72f),
+            color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.60f),
         ) {
             Icon(
-                icon,
+                imageVector = icon,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(8.dp).size(20.dp),
+                modifier = Modifier
+                    .padding(8.dp)
+                    .size(20.dp),
             )
         }
-        Text(text, style = MaterialTheme.typography.bodyMedium)
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodyMedium.copy(
+                color = MaterialTheme.colorScheme.onSurface,
+                fontWeight = FontWeight.Medium,
+            ),
+        )
     }
 }
