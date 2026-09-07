@@ -1,6 +1,7 @@
 package com.tranduytruong.novatech.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,10 +15,12 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -58,7 +61,9 @@ fun BannerCarousel() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp)
-                    .background(Brush.horizontalGradient(banner.colors), RoundedCornerShape(20.dp)),
+                    .shadow(10.dp, RoundedCornerShape(24.dp))
+                    .background(Brush.horizontalGradient(banner.colors), RoundedCornerShape(24.dp))
+                    .border(1.dp, Color.White.copy(alpha = 0.28f), RoundedCornerShape(24.dp)),
                 contentAlignment = Alignment.CenterStart,
             ) {
                 Column(Modifier.padding(22.dp)) {
@@ -76,7 +81,11 @@ fun BannerCarousel() {
                     Modifier
                         .size(if (index == pagerState.currentPage) 9.dp else 7.dp)
                         .background(
-                            if (index == pagerState.currentPage) Color(0xFF2563EB) else Color(0xFFCBD5E1),
+                            if (index == pagerState.currentPage) {
+                                MaterialTheme.colorScheme.primary
+                            } else {
+                                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.18f)
+                            },
                             CircleShape,
                         )
                 )

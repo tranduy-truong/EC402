@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -20,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
+import com.tranduytruong.novatech.ui.theme.SaleRed
 
 @Composable
 fun FlashSaleHeader() {
@@ -37,7 +39,7 @@ fun FlashSaleHeader() {
     val seconds = remainingSeconds % 60
 
     Row(verticalAlignment = Alignment.CenterVertically) {
-        Text("FLASH SALE", color = Color(0xFFDC2626), fontSize = 20.sp, fontWeight = FontWeight.ExtraBold)
+        Text("FLASH SALE", color = SaleRed, fontSize = 20.sp, fontWeight = FontWeight.ExtraBold)
         Row(
             modifier = Modifier.padding(start = 10.dp),
             horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -55,9 +57,16 @@ fun FlashSaleHeader() {
 @Composable
 private fun TimeBox(value: Long) {
     Box(
-        modifier = Modifier.background(Color(0xFF1E293B), RoundedCornerShape(5.dp)).padding(horizontal = 6.dp, vertical = 3.dp),
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.onSurface, RoundedCornerShape(6.dp))
+            .padding(horizontal = 7.dp, vertical = 4.dp),
         contentAlignment = Alignment.Center,
     ) {
-        Text(value.toString().padStart(2, '0'), color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+        Text(
+            value.toString().padStart(2, '0'),
+            color = MaterialTheme.colorScheme.surface,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Bold,
+        )
     }
 }

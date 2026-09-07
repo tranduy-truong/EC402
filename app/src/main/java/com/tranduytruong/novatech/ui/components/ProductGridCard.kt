@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,11 +16,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddShoppingCart
 import androidx.compose.material.icons.filled.LocalShipping
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,9 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.tranduytruong.novatech.core.domain.model.Product
-import com.tranduytruong.novatech.ui.theme.BrandBlue
 import com.tranduytruong.novatech.ui.theme.RatingYellow
 import com.tranduytruong.novatech.ui.theme.SaleRed
 import com.tranduytruong.novatech.util.formatMoney
@@ -43,63 +41,83 @@ import com.tranduytruong.novatech.util.formatMoney
 fun ProductGridCard(product: Product, onOpen: () -> Unit, onAdd: () -> Unit) {
     val discount = product.oldPrice?.let { ((it - product.price) * 100 / it).toInt() }
 
-    ElevatedCard(
+    GlassSurface(
         modifier = Modifier.fillMaxWidth().clickable(onClick = onOpen),
-        shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.elevatedCardColors(containerColor = Color.White),
+        shape = RoundedCornerShape(20.dp),
     ) {
         Column {
-            Box(Modifier.fillMaxWidth().height(145.dp).background(Color(0xFFF8FAFC))) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(145.dp)
+                    .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.48f)),
+            ) {
                 Image(
                     painter = painterResource(product.imageRes),
                     contentDescription = product.name,
-                    modifier = Modifier.fillMaxWidth().height(145.dp).padding(8.dp),
+                    modifier = Modifier.fillMaxWidth().height(145.dp).padding(10.dp),
                     contentScale = ContentScale.Fit,
                 )
                 discount?.let {
                     Text(
                         text = "-$it%",
                         modifier = Modifier
-                            .padding(8.dp)
-                            .clip(RoundedCornerShape(6.dp))
+                            .padding(9.dp)
+                            .clip(RoundedCornerShape(8.dp))
                             .background(SaleRed)
-                            .padding(horizontal = 7.dp, vertical = 3.dp),
+                            .padding(horizontal = 8.dp, vertical = 4.dp),
                         color = Color.White,
-                        fontSize = 11.sp,
+                        style = MaterialTheme.typography.labelSmall,
                         fontWeight = FontWeight.Bold,
                     )
                 }
             }
-            Column(Modifier.padding(10.dp)) {
+            Column(Modifier.padding(11.dp)) {
                 Text(
                     product.name,
                     modifier = Modifier.height(42.dp),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
-                    fontSize = 14.sp,
-                    lineHeight = 19.sp,
-                    fontWeight = FontWeight.Medium,
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.SemiBold,
                 )
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("★ ${product.rating}", color = RatingYellow, fontSize = 11.sp)
-                    Text("  |  Đã bán ${product.id * 127}", color = Color.Gray, fontSize = 10.sp)
+                    Text("★ ${product.rating}", color = RatingYellow, style = MaterialTheme.typography.labelSmall)
+                    Text(
+                        "  •  Đã bán ${product.id * 127}",
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        style = MaterialTheme.typography.labelSmall,
+                    )
                 }
                 Spacer(Modifier.height(5.dp))
-                Text(formatMoney(product.price), color = SaleRed, fontSize = 15.sp, fontWeight = FontWeight.Bold)
+                Text(formatMoney(product.price), color = SaleRed, fontWeight = FontWeight.Bold)
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
                         product.oldPrice?.let {
-                            Text(formatMoney(it), color = Color.Gray, fontSize = 10.sp, textDecoration = TextDecoration.LineThrough)
+                            Text(
+                                formatMoney(it),
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                style = MaterialTheme.typography.labelSmall,
+                                textDecoration = TextDecoration.LineThrough,
+                            )
                         }
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(Icons.Default.LocalShipping, contentDescription = null, tint = BrandBlue, modifier = Modifier.size(13.dp))
-                            Text(" Freeship", color = BrandBlue, fontSize = 10.sp)
+                            Icon(
+                                Icons.Default.LocalShipping,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.size(13.dp),
+                            )
+                            Text(" Freeship", color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.labelSmall)
                         }
                     }
                     FilledIconButton(
                         onClick = onAdd,
-                        modifier = Modifier.size(34.dp),
-                        colors = IconButtonDefaults.filledIconButtonColors(containerColor = BrandBlue),
+                        modifier = Modifier.size(36.dp),
+                        colors = IconButtonDefaults.filledIconButtonColors(
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary,
+                        ),
                     ) {
                         Icon(Icons.Default.AddShoppingCart, contentDescription = "Thêm vào giỏ", modifier = Modifier.size(18.dp))
                     }

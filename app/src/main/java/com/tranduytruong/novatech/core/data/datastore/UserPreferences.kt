@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.tranduytruong.novatech.core.domain.model.ThemeMode
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.IOException
 import javax.inject.Inject
@@ -15,8 +16,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 
 private val Context.userPreferencesDataStore by preferencesDataStore(name = "user_preferences")
-
-enum class ThemeMode { SYSTEM, LIGHT, DARK }
 
 @Singleton
 class UserPreferences @Inject constructor(

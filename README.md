@@ -17,7 +17,10 @@
 - Lưu hồ sơ khách hàng vào Cloud Firestore
 - Giỏ hàng được lưu cục bộ bằng Room, không mất khi đóng ứng dụng
 - Hilt quản lý dependency injection cho ViewModel, database và Firebase
-- DataStore sẵn sàng lưu giao diện và trạng thái onboarding
+- Chế độ Sáng, Tối hoặc theo hệ thống được lưu bằng DataStore
+- Design System Material 3 dùng chung cho màu sắc, chữ, hình dạng và nút
+- Giao diện Liquid Glass với nền gradient, bề mặt kính và thanh điều hướng nổi
+- Trạng thái tải, trống và lỗi được chuẩn hóa thành component dùng lại
 - Trang chủ hiện đại với banner tự động chuyển
 - Thanh tìm kiếm cố định và biểu tượng giỏ hàng có số lượng
 - Flash Sale có đồng hồ đếm ngược
@@ -34,7 +37,7 @@
 - `feature/home`: ViewModel cửa hàng và giỏ hàng
 - `ui/screens`: các màn hình mua sắm hiện tại
 - `ui/components`: thành phần giao diện dùng lại
-- `ui/theme`: màu sắc và giao diện Material 3
+- `ui/theme`: Design System Material 3 và quản lý chế độ Sáng/Tối
 
 Các phiên bản thư viện được quản lý tập trung trong `gradle/libs.versions.toml`.
 
@@ -51,4 +54,5 @@ Nếu Android Studio hỏi tạo/cập nhật Gradle Wrapper, chọn phiên bả
 ## Trạng thái lộ trình
 
 - Giai đoạn 1 — Kiến trúc và build: hoàn thành.
-- Giai đoạn 2 — Design System và giao diện hiện đại: bước tiếp theo.
+- Giai đoạn 2 — Design System, Liquid Glass và Dark Mode: hoàn thành.
+- Giai đoạn 3 — Đồng bộ sản phẩm, danh mục và banner bằng Firestore: bước tiếp theo.
