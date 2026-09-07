@@ -42,6 +42,9 @@ import com.tranduytruong.novatech.ui.screens.CartScreen
 import com.tranduytruong.novatech.ui.screens.CategoryScreen
 import com.tranduytruong.novatech.ui.screens.DetailScreen
 import com.tranduytruong.novatech.ui.screens.HomeScreen
+import com.kyant.backdrop.Backdrop
+import com.kyant.backdrop.backdrops.layerBackdrop
+import com.kyant.backdrop.backdrops.rememberLayerBackdrop
 
 private data class BottomDestination(
     val route: String,
@@ -65,19 +68,27 @@ fun NovaTechApp(
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
+    val navigationBackdrop = rememberLayerBackdrop()
 
     Scaffold(
         containerColor = Color.Transparent,
         bottomBar = {
             if (currentRoute != null && !currentRoute.startsWith("detail/")) {
-                NovaTechBottomBar(navController, currentRoute, vm.cartCount)
+                NovaTechBottomBar(
+                    navController = navController,
+                    currentRoute = currentRoute,
+                    cartCount = vm.cartCount,
+                    backdrop = navigationBackdrop,
+                )
             }
         },
     ) { innerPadding ->
         NavHost(
             navController = navController,
             startDestination = "home",
-            modifier = Modifier.padding(innerPadding),
+            modifier = Modifier
+                .padding(innerPadding)
+                .layerBackdrop(navigationBackdrop),
         ) {
             composable("home") { HomeScreen(navController, vm) }
             composable("categories") { CategoryScreen(navController, vm) }
@@ -105,6 +116,7 @@ private fun NovaTechBottomBar(
     navController: NavHostController,
     currentRoute: String,
     cartCount: Int,
+    backdrop: Backdrop,
 ) {
     Box(
         modifier = Modifier
@@ -115,6 +127,8 @@ private fun NovaTechBottomBar(
         GlassSurface(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(28.dp),
+            backdrop = backdrop,
+            surfaceColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.42f),
         ) {
             NavigationBar(
                 containerColor = Color.Transparent,

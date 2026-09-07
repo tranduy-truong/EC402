@@ -19,7 +19,7 @@
 - Hilt quản lý dependency injection cho ViewModel, database và Firebase
 - Chế độ Sáng, Tối hoặc theo hệ thống được lưu bằng DataStore
 - Design System Material 3 dùng chung cho màu sắc, chữ, hình dạng và nút
-- Giao diện Liquid Glass với nền gradient, bề mặt kính và thanh điều hướng nổi
+- Liquid Glass khúc xạ nền thật bằng Kyant Backdrop, có blur, lens, vibrancy và thanh điều hướng nổi
 - Trạng thái tải, trống và lỗi được chuẩn hóa thành component dùng lại
 - Trang chủ hiện đại với banner tự động chuyển
 - Thanh tìm kiếm cố định và biểu tượng giỏ hàng có số lượng
@@ -43,13 +43,16 @@ Các phiên bản thư viện được quản lý tập trung trong `gradle/libs
 
 ## Chạy dự án
 
-1. Mở thư mục dự án `EC402` bằng Android Studio.
-2. Chờ Android Studio đồng bộ Gradle.
-3. Đảm bảo `app/google-services.json` đã có trên máy (file này không đưa lên GitHub).
-4. Chọn máy ảo hoặc điện thoại Android thật.
-5. Nhấn **Run app**.
+1. Cài **Android SDK Platform 36** trong SDK Manager.
+2. Mở thư mục dự án `EC402` bằng Android Studio.
+3. Chờ Android Studio đồng bộ Gradle.
+4. Đảm bảo `app/google-services.json` đã có trên máy (file này không đưa lên GitHub).
+5. Chọn máy ảo hoặc điện thoại Android thật.
+6. Nhấn **Run app**.
 
-Nếu Android Studio hỏi tạo/cập nhật Gradle Wrapper, chọn phiên bản Gradle tương thích với AGP 8.13.0.
+Nếu Gradle yêu cầu JDK mới, chọn **Embedded JDK 21** tại Gradle JDK. Dự án dùng AGP `8.13.2`, Compose `1.10.0` và `io.github.kyant0:backdrop:1.0.3`.
+
+Hiệu ứng blur cần Android 12 trở lên; hiệu ứng lens/khúc xạ đầy đủ cần Android 13 trở lên. Thiết bị cũ vẫn hiển thị bề mặt kính bán trong suốt.
 
 ## Trạng thái lộ trình
 

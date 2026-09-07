@@ -11,7 +11,7 @@ plugins {
 
 android {
     namespace = "com.tranduytruong.novatech"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.tranduytruong.novatech"
@@ -46,9 +46,11 @@ dependencies {
     implementation(libs.androidx.hilt.lifecycle.viewmodel.compose)
 
     implementation(libs.compose.ui)
+    implementation(libs.compose.foundation)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
     implementation(libs.compose.material.icons.extended)
+    implementation(libs.backdrop)
     debugImplementation(libs.compose.ui.tooling)
 
     implementation(libs.firebase.auth)
