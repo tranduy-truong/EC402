@@ -23,6 +23,7 @@ import com.tranduytruong.novatech.core.domain.model.ThemeMode
 
 val BrandBlue = Color(0xFF4F6BFF)
 val BrandPurple = Color(0xFF8B5CF6)
+val BrandCyan = Color(0xFF22D3EE)
 val SaleRed = Color(0xFFFF4D6D)
 val RatingYellow = Color(0xFFFFB020)
 val SuccessGreen = Color(0xFF22A06B)
